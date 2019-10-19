@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+    <rule instruction="L">
+        <directions>
+            <direction currentValue="N" nextValue="W" />
+            <direction currentValue="W" nextValue="S" />
+            <direction currentValue="S" nextValue="E" />
+            <direction currentValue="E" nextValue="N" />
+        </directions>
+    </rule>
+    <rule instruction="R">
+        <directions>
+            <direction currentValue="N" nextValue="E" />
+            <direction currentValue="E" nextValue="S" />
+            <direction currentValue="S" nextValue="W" />
+            <direction currentValue="W" nextValue="N" />
+        </directions>
+    </rule>
+    <rule instruction="F">
+        <movements>
+            <movement direction="N" action="INCREASE_Y" />
+            <movement direction="S" action="DECREASE_Y" />
+            <movement direction="W" action="DECREASE_X" />
+            <movement direction="E" action="INCREASE_X" />
+        </movements>
+    </rule>
+</rules>
