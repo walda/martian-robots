@@ -54,8 +54,8 @@ public class MartianRobotsApplicationTest {
 
 		martianRobotsApplication.run();
 
-		assertThat(byteArrayOutputStream.toString().replace("\n", "").replace("\r", ""))
-				.isEqualTo("1 1 N");
+		assertThat(byteArrayOutputStream.toString().replace("\r\n", "\n"))
+				.isEqualTo("1 1 N\n");
 
 		verify(scannerWrapper, times(3)).nextLine();
 		verify(scannerWrapper, times(2)).hasNext();
