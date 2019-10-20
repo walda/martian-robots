@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
@@ -53,8 +54,8 @@ public class MartianRobotsApplicationTest {
 
 		martianRobotsApplication.run();
 
-		assertThat(byteArrayOutputStream.toString())
-				.isEqualTo("1 1 N\r\n");
+		assertThat(byteArrayOutputStream.toString().replace("\n", "").replace("\r", ""))
+				.isEqualTo("1 1 N");
 
 		verify(scannerWrapper, times(3)).nextLine();
 		verify(scannerWrapper, times(2)).hasNext();
