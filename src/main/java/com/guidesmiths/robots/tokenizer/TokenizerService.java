@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class TokenizerService {
 
     private final static Pattern INIT_TOKEN_PATTERN = Pattern.compile("^([0-9]|[1-4][0-9]|50)\\s([0-9]|[1-4][0-9]|50)$");
-    private final static Pattern ROBOT_TOKEN_PATTERN = Pattern.compile("^([0-9]+)\\s([0-9]+)\\s([N,S,E,W]{1}+)$");
+    private final static Pattern ROBOT_TOKEN_PATTERN = Pattern.compile("^([0-9]|[1-4][0-9]|50)\\s([0-9]|[1-4][0-9]|50+)\\s([N,S,E,W]{1}+)$");
     private final static Pattern ROBOT_INSTRUCTION_PATTERN = Pattern.compile("^[R,L,F]{1,100}+$");
 
     public InitToken parseInitToken(String text) throws UnparseableTokenException {

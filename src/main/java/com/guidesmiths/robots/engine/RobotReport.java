@@ -8,7 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 @AllArgsConstructor
 public class RobotReport {
 
-    private static final String REPORT_PATTERN = "%s %s %s %s";
+    private static final String REPORT_PATTERN = "%s %s %s%s";
 
     private Pair<Integer, Integer> lastPosition;
     private char direction;
@@ -16,7 +16,7 @@ public class RobotReport {
 
     @Override
     public String toString() {
-        return String.format(REPORT_PATTERN, lastPosition.getLeft(), lastPosition.getRight(), direction, crashed ? "LOST" : "");
+        return String.format(REPORT_PATTERN, lastPosition.getLeft(), lastPosition.getRight(), direction, crashed ? " LOST" : "");
     }
 
 }

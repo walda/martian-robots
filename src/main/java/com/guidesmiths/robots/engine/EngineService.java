@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EngineService {
 
-    private Mars mars;
     private List<Robot> robotList;
     private final RuleEngineService ruleEngineService;
+    private final MarsService marsService;
 
-    public void initMars(InitToken initToken, List<Pair<RobotToken, RobotInstructionToken>> robotTokenList) {
-        mars = new Mars(initToken.getX(), initToken.getY(), new HashMap<>());
+    public void init(InitToken initToken, List<Pair<RobotToken, RobotInstructionToken>> robotTokenList) {
+        marsService.init(initToken.getX(), initToken.getY(), new HashMap<>());
         robotList = robotTokenList.stream()
                 .map(pair -> toRobot(pair.getLeft(), pair.getRight()))
                 .collect(Collectors.toList());
@@ -52,9 +52,9 @@ public class EngineService {
                 if(isDisplacement(actionList.get(i))) {
                     var currentPosition = robot.getPosition();
                     var nextPosition = calculateNextPosition(currentPosition, actionList.get(i));
-                    if(mars.checkField(nextPosition, robot.getDirection()) != Mars.FIELD_STATUS.CRASHED) {
-                        Mars.FIELD_STATUS field_status = mars.explore(nextPosition, robot.getDirection());
-                        robotCrashed = field_status == Mars.FIELD_STATUS.CRASHED;
+                    if(marsService.checkField(nextPosition, robot.getDirection()) != MarsService.FIELD_STATUS.CRASHED) {
+                        MarsService.FIELD_STATUS field_status = marsService.explore(nextPosition, robot.getDirection());
+                        robotCrashed = field_status == MarsService.FIELD_STATUS.CRASHED;
 
                         if(!robotCrashed) {
                             robot.setPosition(nextPosition);
@@ -82,10 +82,8 @@ public class EngineService {
             return Pair.of(position.getLeft() - 1, position.getRight());
         } else if ( action == Action.INCREASE_Y ) {
             return Pair.of(position.getLeft(), position.getRight() + 1);
-        } else if ( action == Action.DECREASE_Y ) {
+        } else {
             return Pair.of(position.getLeft(), position.getRight() - 1);
         }
-
-        return Pair.of(position.getLeft(), position.getRight());
     }
 }

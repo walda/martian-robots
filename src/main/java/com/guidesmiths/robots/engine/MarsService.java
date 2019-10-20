@@ -1,13 +1,13 @@
 package com.guidesmiths.robots.engine;
 
-import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.Optional;
 
-@AllArgsConstructor
-class Mars {
+@Service
+class MarsService {
 
     private static final String EXPLORED_FIELD_KEY_PATTERN = "%s_%s_%s";
 
@@ -17,14 +17,17 @@ class Mars {
     private int upper_right_y;
     private Map<String, FIELD_STATUS> exploredFields;
 
+    void init(int x, int y, Map<String, FIELD_STATUS> fields) {
+        upper_right_x = x;
+        upper_right_y = y;
+        exploredFields = fields;
+    }
 
     FIELD_STATUS explore(Pair<Integer, Integer> coordinates, char direction) {
 
         String key = String.format(EXPLORED_FIELD_KEY_PATTERN, coordinates.getLeft(), coordinates.getRight(), direction);
 
-        if(exploredFields.containsKey(key)) {
-            return exploredFields.get(key);
-        } else if(isInside(coordinates)) {
+        if(isInside(coordinates)) {
             exploredFields.put(key, FIELD_STATUS.EXPLORED);
             return FIELD_STATUS.EXPLORED;
         } else {
