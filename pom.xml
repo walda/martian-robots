@@ -75,23 +75,37 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>2.18.1</version>
 				<configuration>
 					<includes>
 						<include>**/*IT.class</include>
 					</includes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>fabric8-maven-plugin</artifactId>
+				<version>4.3.0</version>
+				<configuration>
+					<images>
+						<image>
+							<name>martian-robots:1.0</name>
+							<build>
+								<from>openjdk:11</from>
+								<entryPoint>
+									<exec>
+										<arg>java</arg>
+										<arg>-jar</arg>
+										<arg>/app/${project.artifactId}-${project.version}.${project.packaging}</arg>
+									</exec>
+								</entryPoint>
+								<assembly>
+									<basedir>/app</basedir>
+									<descriptorRef>artifact</descriptorRef>
+								</assembly>
+							</build>
+						</image>
+					</images>
 				</configuration>
 			</plugin>
 		</plugins>
