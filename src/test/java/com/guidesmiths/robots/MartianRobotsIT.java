@@ -17,6 +17,7 @@ public class MartianRobotsIT {
     private final static String ROBOT_REMAINS_INSIDE_AFTER_ROTATE_INPUT = "1 1\n0 0 N\nL";
     private final static String ROBOT_CRASHES_INPUT = "1 1\n0 1 N\nF";
     private final static String ROBOT_AVOID_CRASHING_INPUT = "1 1\n0 1 N\nF\n0 1 N\nF";
+    private final static String UNPARSEABLE_INPUT = "1 a";
 
     @Test
     public void should_run_application() {
@@ -76,6 +77,19 @@ public class MartianRobotsIT {
 
         assertThat(byteArrayOutputStream.toString().replace("\r\n", "\n"))
                 .isEqualTo("0 1 N LOST\n0 1 N\n");
+    }
+
+    @Test
+    public void should_display_error_message_if_token_is_unparseable() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        System.setIn(new ByteArrayInputStream(UNPARSEABLE_INPUT.getBytes()));
+        System.setErr(new PrintStream(byteArrayOutputStream));
+
+        MartianRobotsApplication.main(new String[0]);
+
+        assertThat(byteArrayOutputStream.toString().replace("\r\n", "\n"))
+                .isEqualTo("Error at line 1. Input '1 a' cannot be parsed\n");
+
     }
 
 }
