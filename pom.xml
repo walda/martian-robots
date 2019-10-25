@@ -67,6 +67,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -91,18 +92,7 @@
 						<image>
 							<name>martian-robots:1.0</name>
 							<build>
-								<from>openjdk:11</from>
-								<entryPoint>
-									<exec>
-										<arg>java</arg>
-										<arg>-jar</arg>
-										<arg>/app/${project.artifactId}-${project.version}.${project.packaging}</arg>
-									</exec>
-								</entryPoint>
-								<assembly>
-									<basedir>/app</basedir>
-									<descriptorRef>artifact</descriptorRef>
-								</assembly>
+								<dockerFile>${project.basedir}/Dockerfile</dockerFile>
 							</build>
 						</image>
 					</images>
